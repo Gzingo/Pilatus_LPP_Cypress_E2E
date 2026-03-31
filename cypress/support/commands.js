@@ -31,31 +31,26 @@ require("cypress-delete-downloads-folder").addCustomCommand();
 require("cypress-downloadfile/lib/downloadFileCommand");
 
 Cypress.Commands.add("auth", (username) => {
-    let users = {};
-    users[Cypress.env("lpp_qa_username")] = Cypress.env("lpp_qa_password");
-    users["eap_testing_viewer"] = Cypress.env("eap_testing_viewer_password");
-    users["eap_testing_shop"] = Cypress.env("eap_testing_shop_password");
+    const defaultUser = Cypress.env("lpp_qa_username");
 
-    if (username === "b-checker") {
-        username = "eap_testing_shop";
-    }
+    const users = {
+        [defaultUser]: Cypress.env("lpp_qa_password"),
+        "eap_testing_viewer": Cypress.env("eap_testing_viewer_password"),
+        "eap_testing_shop": Cypress.env("eap_testing_shop_password"),
+    };
 
-    if (username === "viewer") {
-        username = "eap_testing_viewer";
-    }
+    const aliases = {
+        "b-checker": "eap_testing_shop",
+        "viewer": "eap_testing_viewer",
+        "Nikolic Nikola": defaultUser,
+    };
 
-    if (username === "Nikolic Nikola") {
-        username = Cypress.env("lpp_qa_username");
-    }
-
-    if (username === null) {
-        username = Cypress.env("lpp_qa_username");
-    }
+    username = username === null ? defaultUser : (aliases[username] || username);
 
     if (!users[username]) {
-        throw new Error("User " + username + " not found (see auth Command)");
+        throw new Error(`User "${username}" not found (see auth Command)`);
     }
-    let password = users[username];
+    const password = users[username];
 
     cy.ntlmReset();
     cy.ntlm(

@@ -1,5 +1,5 @@
 import {assertions} from "../support/page_objects/assertions";
-import {onHomeEPI} from "../support/page_objects/home_page_EPI";
+import {onHomeEPI} from "../support/page_objects/home-page-epi";
 
 describe("EAP Home page ", () => {
     beforeEach(() => {

@@ -1,8 +1,8 @@
 import "../support/commands";
 import {assertions} from "../support/page_objects/assertions";
-import {onTestRecording} from "../support/page_objects/test_recording-EAP";
-import {onHomePage} from "../support/page_objects/home_page_EAP";
-import {changeRole} from "../support/page_objects/roles_EAP";
+import {onTestRecording} from "../support/page_objects/test-recording-eap";
+import {onHomePage} from "../support/page_objects/home-page-eap";
+import {changeRole} from "../support/page_objects/roles-eap";
 
 
 describe("EAP Test Recording page ", () => {
@@ -15,7 +15,7 @@ describe("EAP Test Recording page ", () => {
         assertions.assertHomePageURL();
     });
 
-    it.only("successfully access Test Recording and performs UI sanity check", () => {
+    it("successfully access Test Recording and performs UI sanity check", () => {
         onHomePage.setChapterSearchParams();
         onHomePage.clickSearchBtn();
         assertions.assertTestChapterSearch();
@@ -76,7 +76,7 @@ describe("EAP Test Recording page ", () => {
         cy.enterProductionCoordinator_Pin();
         onTestRecording.confirmSwapPopup();
         assertions.assertSwapSuccess();
-        cy.wait(3000);
+        cy.get('[id="toast-container"]').should("not.exist");
         onTestRecording.switch_to_SwappingHistoryTab();
         assertions.assertSwappingHistory();
         onTestRecording.switch_to_AdvancedActionsTab();

@@ -1,8 +1,8 @@
 import "../support/commands";
-import {onHomePage} from "../support/page_objects/home_page_EAP";
+import {onHomePage} from "../support/page_objects/home-page-eap";
 import {assertions} from "../support/page_objects/assertions";
-import {changeRole} from "../support/page_objects/roles_EAP";
-import {onDWPage} from "../support/page_objects/digital_workplace_EAP";
+import {changeRole} from "../support/page_objects/roles-eap";
+import {onDWPage} from "../support/page_objects/digital-workplace-eap";
 
 describe("EAP Home page ", () => {
     beforeEach(() => {
@@ -14,7 +14,7 @@ describe("EAP Home page ", () => {
         assertions.assertHomePageURL();
     });
 
-    it.only("checks currently logged in user", () => {
+    it("checks currently logged in user", () => {
         changeRole.getDefaultUser();
         assertions.assertSignedInDefaultUser();
     });
@@ -196,7 +196,7 @@ describe("EAP Home page ", () => {
         assertions.assertOWL_recordPage();
     });
 
-    it.only("click 'View' button on test recording item", () => {
+    it("click 'View' button on test recording item", () => {
         onHomePage.setState_Completed();
         onHomePage.clickSearchBtn();
         assertions.assertStateSearchCompleted();

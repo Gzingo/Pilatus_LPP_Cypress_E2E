@@ -1,4 +1,4 @@
-export class Roles_EAP {
+export class RolesEAP {
     getDefaultUser() {
         cy.get(".user-switch-menu")
             .find("select")
@@ -78,4 +78,4 @@ export class Roles_EAP {
     }
 }
 
-export const changeRole = new Roles_EAP();
+export const changeRole = new RolesEAP();

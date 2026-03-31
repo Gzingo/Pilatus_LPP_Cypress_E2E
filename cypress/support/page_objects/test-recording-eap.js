@@ -1,36 +1,38 @@
 // noinspection NonAsciiCharacters,JSNonASCIINames
 
-export class Test_recordingEAP {
+import { TEST_RECORDING } from "../test-data/constants";
+
+export class TestRecordingEAP {
     switch_to_TestRecordingTab() {
-        cy.get("[id=\"testrecording-checklist\"]").find(".nav")
+        cy.get('[id="testrecording-checklist"]').find(".nav")
             .within(() => {
                 cy.get("li").eq(0).click();
             });
     }
 
     switch_to_MetaInformationTab() {
-        cy.get("[id=\"testrecording-checklist\"]").find(".nav")
+        cy.get('[id="testrecording-checklist"]').find(".nav")
             .within(() => {
                 cy.get("li").eq(1).click();
             });
     }
 
     switch_to_Record_ofRevisionsTab() {
-        cy.get("[id=\"testrecording-checklist\"]").find(".nav")
+        cy.get('[id="testrecording-checklist"]').find(".nav")
             .within(() => {
                 cy.get("li").eq(2).click();
             });
     }
 
     switch_to_SwappingHistoryTab() {
-        cy.get("[id=\"testrecording-checklist\"]").find(".nav")
+        cy.get('[id="testrecording-checklist"]').find(".nav")
             .within(() => {
                 cy.get("li").eq(3).click();
             });
     }
 
     switch_to_AdvancedActionsTab() {
-        cy.get("[id=\"testrecording-checklist\"]").find(".nav")
+        cy.get('[id="testrecording-checklist"]').find(".nav")
             .within(() => {
                 cy.get("li").eq(4).click();
             });
@@ -53,14 +55,14 @@ export class Test_recordingEAP {
     inputForTestRecordingSwap() {
         cy.get("swap-test-recording").find(".msn-container")
             .within(() => {
-                cy.get("[id=\"msn\"]").click();
+                cy.get('[id="msn"]').click();
                 cy.get("ng-dropdown-panel").should("be.visible")
                     .within(() => {
                         cy.get(".ng-option").eq(0).click();
                     });
             });
         cy.get("swap-test-recording").find(".reason-container")
-            .type("Swapping Test Recording for purposes of QA E2E test");
+            .type(TEST_RECORDING.SWAP_REASON);
     }
 
     confirmSwap() {
@@ -131,7 +133,6 @@ export class Test_recordingEAP {
                     });
             });
     }
-
 }
 
 export const onTestRecording = new Test_recordingEAP();

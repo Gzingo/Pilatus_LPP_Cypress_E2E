@@ -1,25 +1,27 @@
-export class DWPage {
+import { WORKPLACE } from "../test-data/constants";
+
+export class DWPageEAP {
 
     setWorkplaceForDW() {
-        cy.get("[id=\"search\"]")
-            // .find("div").eq(2)
+        cy.get('[id="search"]')
             .find("div").eq(2)
             .then((setInput) => {
                 cy.wrap(setInput);
-                cy.wait(2000);
-                cy.get("input").eq(1)
-                    .type("420 APM{enter}");
+                cy.get("input").eq(1).should("be.visible")
+                    .type(WORKPLACE.APM_420 + "{enter}");
             });
     }
 
     clickSearchDW() {
-        cy.get("[id=\"search\"]")
+        cy.intercept("GET", "/api/**").as("dwSearch");
+        cy.get('[id="search"]')
             .find("div").eq(3)
             .then((searchBtn) => {
                 cy.wrap(searchBtn);
                 cy.get("button").eq(1).click();
-                cy.wait(60000);
             });
+        cy.wait("@dwSearch", { timeout: 60000 });
+        cy.get("table tbody", { timeout: 10000 }).should("be.visible");
     }
 
     waitForDWTable() {
@@ -28,18 +30,14 @@ export class DWPage {
             url: "NDA_Protected_URL"
         }).as("tableLoaded");
 
-        cy.wait("@tableLoaded", {timeout: 60000}).its("response.statusCode").should("eq", 200);
+        cy.wait("@tableLoaded", { timeout: 60000 }).its("response.statusCode").should("eq", 200);
     }
 
     openOWL_fromDW() {
-        // _____Open in same window when an HTML element is a button_____
-        // const url = "NDA_Protected_URL";
-
         cy.get("table")
             .find("tbody")
             .within(() => {
                 cy.get("td").eq(5);
-                // Stub window.open to prevent opening a new tab
                 cy.window().then((win) => {
                     cy.stub(win, "open").callsFake((url) => {
                         win.location.href = url;
@@ -50,4 +48,4 @@ export class DWPage {
     }
 }
 
-export const onDWPage = new DWPage();
+export const onDWPage = new DWPageEAP();
